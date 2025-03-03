@@ -1,0 +1,52 @@
+[
+  {
+    "id": "video1",
+    "path": "/videos/hello_1.mp4",
+    "correctSign": "Hello"
+  },
+  {
+    "id": "video2",
+    "path": "/videos/thankyou_1.mp4",
+    "correctSign": "Thank you"
+  },
+  {
+    "id": "video3",
+    "path": "/videos/yes_1.mp4",
+    "correctSign": "Yes"
+  },
+  {
+    "id": "video4",
+    "path": "/videos/no_1.mp4",
+    "correctSign": "No"
+  },
+  {
+    "id": "video5",
+    "path": "/videos/please_1.mp4",
+    "correctSign": "Please"
+  },
+  {
+    "id": "video6",
+    "path": "/videos/sorry_1.mp4",
+    "correctSign": "Sorry"
+  },
+  {
+    "id": "video7",
+    "path": "/videos/good_1.mp4",
+    "correctSign": "Good"
+  },
+  {
+    "id": "video8",
+    "path": "/videos/bad_1.mp4",
+    "correctSign": "Bad"
+  },
+  {
+    "id": "video9",
+    "path": "/videos/help_1.mp4",
+    "correctSign": "Help"
+  },
+  {
+    "id": "video10",
+    "path": "/videos/stop_1.mp4",
+    "correctSign": "Stop"
+  }
+] 
