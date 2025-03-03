@@ -102,7 +102,7 @@ const ValidationPage = ({ user }: ValidationPageProps) => {
           setSelectedSign(null);
           setSubmitSuccess(false);
         }
-      }, 1000);
+      }, 1500);
       
     } catch (err) {
       console.error('Error submitting validation:', err);
@@ -130,15 +130,37 @@ const ValidationPage = ({ user }: ValidationPageProps) => {
   };
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="loading">
+        <div className="loading-spinner"></div>
+        <p>Loading data...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return (
+      <div className="error">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <p>{error}</p>
+      </div>
+    );
   }
 
   if (videos.length === 0) {
-    return <div className="no-videos">No videos available for validation.</div>;
+    return (
+      <div className="no-videos">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+          <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+        </svg>
+        <p>No videos available for validation.</p>
+      </div>
+    );
   }
 
   // Check if all videos are validated
@@ -150,13 +172,24 @@ const ValidationPage = ({ user }: ValidationPageProps) => {
       
       {allVideosValidated ? (
         <div className="completion-message">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
           <h2>All Done! 🎉</h2>
           <p>You have completed all video validations. Thank you for your contribution!</p>
         </div>
       ) : (
         <>
           <div className="video-section">
-            <h2>Video {currentVideoIndex + 1} of {videos.length}</h2>
+            <h2>
+              <span>Video {currentVideoIndex + 1} of {videos.length}</span>
+              <div className="video-counter">
+                <span className="completed">{progress.completed}</span>
+                <span className="separator">/</span>
+                <span className="total">{progress.total}</span>
+              </div>
+            </h2>
             
             <div className="video-player">
               {currentVideo && (
@@ -170,23 +203,28 @@ const ValidationPage = ({ user }: ValidationPageProps) => {
                   Your browser does not support the video tag.
                 </video>
               )}
-            </div>
-            
-            <div className="video-navigation">
-              <button 
-                onClick={handlePreviousVideo} 
-                disabled={currentVideoIndex === 0}
-                className="nav-button"
-              >
-                Previous
-              </button>
-              <button 
-                onClick={handleNextVideo} 
-                disabled={currentVideoIndex === videos.length - 1}
-                className="nav-button"
-              >
-                Next
-              </button>
+              <div className="video-controls">
+                <button 
+                  onClick={handlePreviousVideo} 
+                  disabled={currentVideoIndex === 0}
+                  className="control-button"
+                  title="Previous video"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <button 
+                  onClick={handleNextVideo} 
+                  disabled={currentVideoIndex === videos.length - 1}
+                  className="control-button"
+                  title="Next video"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
           
@@ -201,13 +239,24 @@ const ValidationPage = ({ user }: ValidationPageProps) => {
                   onClick={() => handleSignSelect(sign)}
                 >
                   {sign}
+                  {selectedSign === sign && (
+                    <svg className="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  )}
                 </button>
               ))}
             </div>
             
             <div className="submit-section">
               {submitSuccess && (
-                <div className="success-message">Validation submitted successfully!</div>
+                <div className="success-message">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                  <span>Validation submitted successfully!</span>
+                </div>
               )}
               
               <button
@@ -215,7 +264,20 @@ const ValidationPage = ({ user }: ValidationPageProps) => {
                 disabled={!selectedSign || submitting}
                 className="submit-button"
               >
-                {submitting ? 'Submitting...' : 'Submit Validation'}
+                {submitting ? (
+                  <>
+                    <div className="spinner"></div>
+                    <span>Submitting...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>Submit Validation</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
