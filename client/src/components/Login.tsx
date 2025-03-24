@@ -30,7 +30,7 @@ const Login = ({ onLogin }: LoginProps) => {
     setError('');
     
     try {
-      const response = await axios.post('http://localhost:5000/api/login', {
+      const response = await axios.post('http://localhost:3004/api/login', {
         username,
         password
       });
